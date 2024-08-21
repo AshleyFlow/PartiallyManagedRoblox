@@ -1,3 +1,4 @@
 /cache
 
-secrets.luau
+sync.config.luau
+sourcemap.json
