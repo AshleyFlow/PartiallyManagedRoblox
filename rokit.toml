@@ -5,3 +5,4 @@
 
 [tools]
 lune = "lune-org/lune@0.8.7"
+argon = "argon-rbx/argon@2.0.16"

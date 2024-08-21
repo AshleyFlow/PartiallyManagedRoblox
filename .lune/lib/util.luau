@@ -3,7 +3,7 @@ local fs = require("@lune/fs")
 local net = require("@lune/net")
 local roblox = require("@lune/roblox")
 
-local secrets = require("../../secrets")
+local config = require("../../sync.config")
 local links = require("./urls")
 
 local function downloadPlace(): {
@@ -15,10 +15,10 @@ local function downloadPlace(): {
 	local response = net.request({
 		url = links.asset,
 		headers = {
-			Cookie = secrets.cookie,
+			Cookie = config.cookie,
 		},
 		query = {
-			id = secrets.place,
+			id = config.place,
 		},
 	})
 
@@ -45,12 +45,12 @@ local function cache(name: string, content: string)
 
 	fs.writeFile(path, content)
 
-	print("Cached", name)
+	print("Saved", name, "to cache")
 end
 
 local function getPlace(useCache: boolean): roblox.DataModel
 	if useCache then
-		print("Using the stored cache instead of downloading the Roblox place")
+		print("Using cache instead of downloading place")
 
 		return roblox.deserializePlace(fs.readFile("cache/place.rbxm"))
 	else
@@ -68,7 +68,7 @@ local function publishPlace(place: roblox.DataModel)
 		body = roblox.serializePlace(place, false),
 		url = links.cloud.publish,
 		headers = {
-			["x-api-key"] = secrets.key,
+			["x-api-key"] = config.key,
 			["Content-Type"] = "application/octet-stream",
 		},
 	})

@@ -1,0 +1,13 @@
+{
+  "name": "PartiallyManaged",
+  "legacyScripts": false,
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$path": "src/client"
+    },
+    "ServerScriptService": {
+      "$path": "src/server"
+    }
+  }
+}

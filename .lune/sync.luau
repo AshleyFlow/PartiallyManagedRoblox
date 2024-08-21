@@ -1,14 +1,17 @@
-local cli = require("./lib/cli")
+local stdio = require("@lune/stdio")
+
+local config = require("../sync.config")
 local util = require("./lib/util")
+local action = stdio.prompt("select", "Select an action", {
+	"Download, Modify & Publish",
+})
 
-local cli_cache = table.find(cli.flags, "use-cache") and true
-local cli_publish = table.find(cli.flags, "publish") and true
+if action == 1 then
+	local place = util.getPlace(false)
 
-local place = util.getPlace(cli_cache)
-
-if cli_publish then
-	-- ...
-	-- modifiy the place
+	config.modify(place)
 
 	util.publishPlace(place)
+else
+	print("No action selected")
 end
