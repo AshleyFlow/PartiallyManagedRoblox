@@ -13,8 +13,8 @@ local action = stdio.prompt("select", "Select an action", {
 if action == 1 then
 	local place = util.getPlace(false)
 
+	sourcemap.sourceToPlace(place)
 	config.modify(place)
-	sourcemap.syncToPlace(place)
 
 	util.publishPlace(place)
 else
