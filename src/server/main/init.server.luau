@@ -1,5 +1,4 @@
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local hello = require(ReplicatedStorage.modules.hello)
-hello(Players.LocalPlayer.Name)
+hello("Roblox")

@@ -12,12 +12,7 @@ export type SourceObject = {
 	children: { SourceObject }?,
 }
 
-local function sourceToInstance(sourceObject: SourceObject): roblox.Instance
-	if sourceObject.className == "Folder" then
-		error("Folders are not supported")
-	end
-
-	local scriptSource = sourceObject
+local function scriptSourceToInstance(scriptSource: SourceObject): roblox.Instance
 	assert(
 		scriptSource.className == "Script" or scriptSource.className == "ModuleScript",
 		"only Scripts and ModuleScripts are currently supported"
@@ -50,6 +45,32 @@ local function sourceToInstance(sourceObject: SourceObject): roblox.Instance
 	scriptInstance.Source = scriptContent
 
 	return scriptInstance :: any
+end
+
+local function sourceToInstance(sourceObject: SourceObject): roblox.Instance
+	local sourceInstance: roblox.Instance? = nil
+
+	if sourceObject.className == "Folder" then
+		local folder = roblox.Instance.new("Folder")
+		folder.Name = sourceObject.name
+
+		sourceInstance = folder
+	elseif sourceObject.className == "Script" or sourceObject.className == "ModuleScript" then
+		sourceInstance = scriptSourceToInstance(sourceObject)
+	end
+
+	assert(sourceInstance, `{sourceObject.className} is not supported`)
+
+	if sourceObject.children then
+		for _, childSource in sourceObject.children do
+			local childInstance = sourceToInstance(childSource)
+			childInstance.Parent = sourceInstance
+
+			print("Synced Child", childInstance:GetFullName())
+		end
+	end
+
+	return sourceInstance
 end
 
 local function sourceToPlace(place: roblox.DataModel)
