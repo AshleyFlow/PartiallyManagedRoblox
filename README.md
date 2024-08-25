@@ -8,6 +8,9 @@ This template uses Lune to do the following:
 
 By default this repo uses `rokit` to install tools and `argon` to sync with studio, feel free to change them to `aftman` and `rojo`, nothing will break if you do so.
 
+The lune script in this template is very limited (only supports Script and ModuleScript instances)
+you can change this behavior by editing `.lune/lib/sourcemap.luau`
+
 ## Usage
 
 create a file with the name of `sync.config.luau` and fill it with the following content:
