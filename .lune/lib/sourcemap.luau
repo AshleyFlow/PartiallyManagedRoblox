@@ -13,6 +13,10 @@ export type SourceObject = {
 }
 
 local function sourceToInstance(sourceObject: SourceObject): roblox.Instance
+	if sourceObject.className == "Folder" then
+		error("Folders are not supported")
+	end
+
 	local scriptSource = sourceObject
 	assert(
 		scriptSource.className == "Script" or scriptSource.className == "ModuleScript",
